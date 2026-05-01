@@ -544,8 +544,8 @@
             
             if(!amt || !newStart || !newDue) return alert("Fill all details");
             
-            closeFeeModal(); document.getElementById('loader-overlay').style.display = 'flex';
             if(newStart > newDue) return alert('Start Date cannot be after End Date.');
+            closeFeeModal(); document.getElementById('loader-overlay').style.display = 'flex';
 
             const todayStr = todayISO();
             const newPayment = { date: todayStr, amount: Number(amt), type: 'Renewal/Fee' };
@@ -648,9 +648,11 @@
         function setView(v) { currentView=v; document.getElementById('searchName').value = ''; document.querySelectorAll('.status-toggle button').forEach(b=>b.classList.remove('active')); document.getElementById('btn-'+v).classList.add('active'); renderStudents(); }
 
         // AngularJS bootstrap (for future modularization)
-        angular.module('libraryApp', []).controller('LibraryController', function() {
-            this.appName = "Mahir Ali Library";
-        });
+        if (window.angular) {
+            angular.module('libraryApp', []).controller('LibraryController', function() {
+                this.appName = "Mahir Ali Library";
+            });
+        }
     </script>
 </body>
 </html>
