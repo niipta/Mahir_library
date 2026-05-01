@@ -51,6 +51,7 @@
         .btn { width: 100%; background: var(--primary); color: white; border: none; padding: 1rem; border-radius: 16px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.2s; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
         .btn:active { transform: scale(0.96); }
         .btn-success { background: var(--success); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        .btn-danger { background: var(--danger); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
 
         .list-item { background: var(--card-bg); border-radius: 20px; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid var(--border); border-left: 5px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
         .list-item.pending-item { border-left-color: var(--warning); }
@@ -252,14 +253,35 @@
 
         let students = [], expenses = [], currentView = 'Paid', activeModalId = null, currentProfileId = null;
 
+        const todayISO = () => new Date().toISOString().split('T')[0];
+        const addDaysISO = (iso, days) => { const d = new Date(iso); d.setDate(d.getDate() + days); return d.toISOString().split('T')[0]; };
+
         window.onload = () => {
-            const today = new Date().toISOString().split('T')[0];
+            const today = todayISO();
             document.getElementById('dashMonth').value = today.substring(0, 7);
             document.getElementById('eDate').value = today;
             document.getElementById('sStartDate').value = today;
-            document.getElementById('sDueDate').value = today;
+            document.getElementById('sDueDate').value = addDaysISO(today, 30);
             load();
         };
+
+
+        async function normalizeStudentStatuses() {
+            const today = todayISO();
+            const updates = [];
+
+            students.forEach(s => {
+                if(s.activeStatus === 'Paused') return;
+                if(s.dueDate && s.dueDate < today && s.feeStatus !== 'Pending') {
+                    updates.push({ id: s.id, feeStatus: 'Pending' });
+                    s.feeStatus = 'Pending';
+                }
+            });
+
+            for (const u of updates) {
+                await db.collection("students").doc(u.id).update({ feeStatus: u.feeStatus });
+            }
+        }
 
         async function load() {
             document.getElementById('loader-overlay').style.display = 'flex';
@@ -268,6 +290,7 @@
                 students = sSnap.docs.map(d => ({id: d.id, ...d.data()}));
                 const eSnap = await db.collection("expenses").get();
                 expenses = eSnap.docs.map(d => ({id: d.id, ...d.data()}));
+                await normalizeStudentStatuses();
                 updateDashboard(); renderSeats(); renderStudents(); renderExpenses();
             } catch (err) {
                 console.error(err);
@@ -391,6 +414,7 @@
                             `<button class="action-btn btn-success" onclick="openFeeModal('${s.id}','${s.name}', '${s.dueDate}')">Pay</button>` : 
                             `<button class="action-btn" style="background:var(--success-light); color:var(--success);" onclick="openFeeModal('${s.id}','${s.name}', '${s.dueDate}')">Renew</button>`
                         }
+                        <button class="action-btn" style="background:#FEE2E2; color:var(--danger);" onclick="del('students','${s.id}')"><span class="material-symbols-rounded" style="font-size:16px;">delete</span></button>
                     </div>
                 </div>`;
             });
@@ -466,26 +490,33 @@
             
             document.getElementById('loader-overlay').style.display = 'flex';
             const amt = Number(document.getElementById('sFees').value);
-            const todayStr = new Date().toISOString().split('T')[0];
+            const todayStr = todayISO();
+            const startDate = document.getElementById('sStartDate').value;
+            const dueDate = document.getElementById('sDueDate').value;
+            const feeStatus = document.getElementById('sStatus').value;
+
+            if(startDate > dueDate) return alert('Plan Start Date cannot be after Plan End Date.');
+
+            const paymentHistory = feeStatus === 'Paid' ? [{ date: todayStr, amount: amt, type: 'Admission' }] : [];
 
             await db.collection("students").add({
                 name: document.getElementById('sName').value, 
                 phone: document.getElementById('sPhone').value,
                 seat: seat, 
                 shift: shift, 
-                feeStatus: document.getElementById('sStatus').value, 
+                feeStatus: feeStatus, 
                 fees: amt, 
-                startDate: document.getElementById('sStartDate').value, // Saved
-                dueDate: document.getElementById('sDueDate').value,     // Saved
+                startDate: startDate,
+                dueDate: dueDate,
                 activeStatus: 'Active', 
                 dateAdded: todayStr,
-                paymentHistory: [{ date: todayStr, amount: amt, type: 'Admission' }] 
+                paymentHistory: paymentHistory 
             });
             
             // FULL RESET FIX
             document.getElementById('addStudentForm').reset();
             document.getElementById('sStartDate').value = todayStr;
-            document.getElementById('sDueDate').value = todayStr;
+            document.getElementById('sDueDate').value = addDaysISO(todayStr, 30);
             document.getElementById('sFees').value = "0";
 
             load(); switchTab('list');
@@ -498,7 +529,7 @@
             
             document.getElementById('feeInputAmount').value = '';
             document.getElementById('feeInputStart').value = oldDueDate; // Auto fill start with old end
-            document.getElementById('feeInputDate').value = '';
+            document.getElementById('feeInputDate').value = addDaysISO(oldDueDate, 30);
             
             document.getElementById('feeModal').style.display = 'flex'; 
         }
@@ -512,7 +543,9 @@
             if(!amt || !newStart || !newDue) return alert("Fill all details");
             
             closeFeeModal(); document.getElementById('loader-overlay').style.display = 'flex';
-            const todayStr = new Date().toISOString().split('T')[0];
+            if(newStart > newDue) return alert('Start Date cannot be after End Date.');
+
+            const todayStr = todayISO();
             const newPayment = { date: todayStr, amount: Number(amt), type: 'Renewal/Fee' };
 
             // Update Start Date AND Due Date
