@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mahir Ali Library - Ultimate</title>
+    <title>Mahir Ali Library - Elite</title>
     
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
@@ -19,7 +19,7 @@
             --primary: #4F46E5; --primary-dark: #3730A3; --primary-light: #EEF2FF;
             --bg-color: #F8FAFC; --card-bg: #FFFFFF; --text-main: #0F172A;
             --text-muted: #64748B; --border: #E2E8F0; --success: #10B981;
-            --danger: #EF4444; --warning: #F59E0B; --paused: #94A3B8;
+            --danger: #EF4444; --warning: #F59E0B; --paused: #94A3B8; --whatsapp: #25D366;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -33,7 +33,7 @@
         @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         nav { position: fixed; bottom: 0; width: 100%; background: var(--card-bg); display: flex; justify-content: space-around; padding: 0.8rem 0 1.2rem; box-shadow: 0 -10px 25px rgba(0,0,0,0.05); z-index: 100; border-radius: 28px 28px 0 0; }
-        nav button { background: none; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 500; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 20%; }
+        nav button { background: none; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 500; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 20%; cursor: pointer;}
         nav button.active { color: var(--primary); font-weight: 600; }
         nav button .material-symbols-rounded { font-size: 1.6rem; transition: 0.3s; }
         nav button.active .material-symbols-rounded { transform: translateY(-3px) scale(1.1); font-variation-settings: 'FILL' 1; }
@@ -43,7 +43,6 @@
         .stat-card { background: var(--card-bg); border-radius: 20px; padding: 1.2rem; border: 1px solid var(--border); }
         .stat-card p { font-size: 1.6rem; font-weight: 800; margin-top: 4px; }
         
-        /* Alert Cards for Reminders */
         .alert-card { background: #FFFBEB; border-left: 5px solid var(--warning); border-radius: 16px; padding: 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
         .alert-card.danger { background: #FEF2F2; border-left-color: var(--danger); }
 
@@ -53,7 +52,7 @@
         .btn:active { transform: scale(0.96); }
         .btn-success { background: var(--success); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
 
-        .list-item { background: var(--card-bg); border-radius: 20px; padding: 1.2rem; margin-bottom: 1rem; border-left: 5px solid var(--primary); border: 1px solid var(--border); border-left: 5px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .list-item { background: var(--card-bg); border-radius: 20px; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid var(--border); border-left: 5px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
         .list-item.pending-item { border-left-color: var(--warning); }
         .list-item.paused-item { border-left-color: var(--paused); opacity: 0.7; }
         .action-row { display: flex; gap: 8px; margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
@@ -63,12 +62,10 @@
         .spinner { width: 40px; height: 40px; border: 4px solid var(--primary-light); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Modals */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); z-index: 3000; justify-content: center; align-items: center; padding: 15px; }
         .modal-box { background: var(--card-bg); padding: 24px; border-radius: 24px; width: 100%; max-width: 450px; max-height: 85vh; overflow-y: auto; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes pop { from { transform: scale(0.8); opacity: 0;} to { transform: scale(1); opacity: 1;} }
         
-        /* History Table */
         .history-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85rem; }
         .history-table th { background: #F1F5F9; padding: 10px; text-align: left; color: var(--text-muted); border-radius: 8px 8px 0 0; }
         .history-table td { padding: 10px; border-bottom: 1px solid var(--border); }
@@ -89,17 +86,12 @@
                     <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary);">Student Profile</h3>
                     <span class="material-symbols-rounded" style="cursor:pointer; color:var(--danger);" onclick="closeProfileModal()">close</span>
                 </div>
-                
-                <div id="profileContent" style="background:#F8FAFC; padding:15px; border-radius:16px; margin-bottom:15px;">
-                    </div>
-
-                <button class="btn" style="background:#1E293B; margin-bottom:15px;" onclick="downloadIDCard()"><span class="material-symbols-rounded">badge</span> Download ID Card</button>
-
+                <div id="profileContent" style="background:#F8FAFC; padding:15px; border-radius:16px; margin-bottom:15px;"></div>
+                <button class="btn" style="background:#1E293B; margin-bottom:15px;" onclick="downloadIDCard()"><span class="material-symbols-rounded">badge</span> Download ID Card PDF</button>
                 <h4 style="font-size: 1rem; color: var(--text-muted);">Payment Ledger</h4>
                 <table class="history-table">
                     <thead><tr><th>Date</th><th>Type</th><th>Amount</th></tr></thead>
-                    <tbody id="historyTableBody">
-                        </tbody>
+                    <tbody id="historyTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -108,11 +100,14 @@
             <div class="modal-box" style="max-width: 350px;">
                 <h3 style="font-size: 1.2rem; font-weight: 700;">Update Fee Record</h3>
                 <p id="feeModalDesc" style="font-size: 0.85rem; color: var(--text-muted); margin: 8px 0 16px;"></p>
-                <input type="number" id="feeInputAmount" placeholder="Amount collected (₹)" style="margin-bottom: 12px;">
-                <input type="date" id="feeInputDate" style="margin-bottom: 20px;">
+                <div style="margin-bottom: 12px;"><label style="font-size:0.8rem; color:gray;">Fees Collected (₹)</label><input type="number" id="feeInputAmount"></div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom: 20px;">
+                    <div><label style="font-size:0.8rem; color:gray;">Start Date</label><input type="date" id="feeInputStart"></div>
+                    <div><label style="font-size:0.8rem; color:gray;">End Date</label><input type="date" id="feeInputDate"></div>
+                </div>
                 <div style="display:flex; gap:10px;">
                     <button class="btn" style="background:var(--border); color:var(--text-main); box-shadow:none;" onclick="closeFeeModal()">Cancel</button>
-                    <button class="btn btn-success" id="feeConfirmBtn">Save & Add Ledger</button>
+                    <button class="btn btn-success" id="feeConfirmBtn">Save Ledger</button>
                 </div>
             </div>
         </div>
@@ -120,7 +115,8 @@
         <div class="container">
             <section id="tab-dashboard" class="tab-content active">
                 <div class="card" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; box-shadow: 0 10px 25px rgba(79,70,229,0.3);">
-                    <h3 style="font-size: 0.85rem; opacity: 0.9;">Overall Net Profit</h3>
+                    <h3 style="font-size: 0.85rem; opacity: 0.9;">Net Profit (Monthly Ledger)</h3>
+                    <input type="month" id="dashMonth" onchange="updateDashboard()" style="background:rgba(255,255,255,0.2); color:white; border:none; margin-top:10px; padding:0.5rem; width:auto;">
                     <p id="net-balance" style="font-size: 2.4rem; font-weight: 700; margin-top: 10px;">₹0</p>
                 </div>
 
@@ -153,6 +149,7 @@
                         <option value="All">All Shifts Overview</option>
                         <option value="Morning">Morning Shift</option>
                         <option value="Evening">Evening Shift</option>
+                        <option value="Full Day">Full Day</option>
                     </select>
                 </div>
                 <div class="card" style="display: flex; justify-content: space-around; font-size: 0.85rem; padding: 1rem;">
@@ -168,17 +165,26 @@
                     <button id="btn-Pending" onclick="setView('Pending')" style="flex:1; border:none; background:transparent; padding:0.7rem; border-radius:10px; font-weight:600;">Pending</button>
                     <button id="btn-Paused" onclick="setView('Paused')" style="flex:1; border:none; background:transparent; padding:0.7rem; border-radius:10px; font-weight:600;">Paused</button>
                 </div>
-                <div style="position: relative; margin-bottom: 1.2rem;">
-                    <span class="material-symbols-rounded" style="position: absolute; left: 12px; top: 12px; color: var(--text-muted);">search</span>
-                    <input type="text" id="searchName" placeholder="Search student name..." oninput="renderStudents()" style="padding-left: 45px;">
+                
+                <div style="display:flex; gap:10px; margin-bottom: 1.2rem;">
+                    <div style="position: relative; flex: 2;">
+                        <span class="material-symbols-rounded" style="position: absolute; left: 12px; top: 12px; color: var(--text-muted);">search</span>
+                        <input type="text" id="searchName" placeholder="Search name..." oninput="renderStudents()" style="padding-left: 45px;">
+                    </div>
+                    <select id="sortStudents" onchange="renderStudents()" style="flex: 1; padding: 0.9rem; font-size:0.85rem;">
+                        <option value="date">Date</option>
+                        <option value="name">Name</option>
+                        <option value="seat">Seat</option>
+                    </select>
                 </div>
+
                 <div id="studentListContainer"></div>
             </section>
 
             <section id="tab-add" class="tab-content">
                 <div class="card">
                     <h2 style="font-size: 1.2rem; margin-bottom: 1.5rem;"><span class="material-symbols-rounded">person_add</span> New Admission</h2>
-                    <form onsubmit="addStudent(event)">
+                    <form id="addStudentForm" onsubmit="addStudent(event)">
                         <div style="margin-bottom:1rem;"><label>Full Name</label><input type="text" id="sName" required></div>
                         <div style="margin-bottom:1rem;"><label>Phone</label><input type="tel" id="sPhone" required></div>
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:1rem;">
@@ -187,9 +193,12 @@
                         </div>
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:1rem;">
                             <div><label>Fee Status</label><select id="sStatus"><option value="Paid">Paid</option><option value="Pending">Pending</option></select></div>
-                            <div><label>Fees (₹)</label><input type="number" id="sFees" value="0"></div>
+                            <div><label>Fees (₹)</label><input type="number" id="sFees" value="0" required></div>
                         </div>
-                        <div style="margin-bottom:1.5rem;"><label>Admission Date</label><input type="date" id="sDueDate" required></div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:1.5rem;">
+                            <div><label>Plan Start Date</label><input type="date" id="sStartDate" required></div>
+                            <div><label>Plan End (Due)</label><input type="date" id="sDueDate" required></div>
+                        </div>
                         <button type="submit" class="btn">Save Admission</button>
                     </form>
                 </div>
@@ -197,8 +206,8 @@
 
             <section id="tab-expenses" class="tab-content">
                 <div class="card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1.5rem;"><span class="material-symbols-rounded">payments</span> Bills & Expenses</h2>
-                    <form onsubmit="addExpense(event)">
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1.5rem;"><span class="material-symbols-rounded">payments</span> Add Expense</h2>
+                    <form id="addExpenseForm" onsubmit="addExpense(event)">
                         <div style="margin-bottom:1rem;"><label>Category</label><select id="eType"><option>WiFi</option><option>Water</option><option>Manager</option><option>Cleaning</option><option>Other</option></select></div>
                         <div style="margin-bottom:1rem;"><label>Amount (₹)</label><input type="number" id="eAmount" required></div>
                         <div style="margin-bottom:1.5rem;"><label>Date</label><input type="date" id="eDate" required></div>
@@ -207,12 +216,12 @@
                 </div>
                 
                 <div class="card" style="background:#F8FAFC;">
-                    <h3 style="font-size: 0.9rem; margin-bottom: 10px;">Download Report (PDF)</h3>
+                    <h3 style="font-size: 1rem; margin-bottom: 10px;"><span class="material-symbols-rounded" style="vertical-align: middle;">download</span> Download Report (PDF)</h3>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:1rem;">
-                        <input type="date" id="pdfFrom" style="padding:0.6rem; font-size:0.8rem; background:white;">
-                        <input type="date" id="pdfTo" style="padding:0.6rem; font-size:0.8rem; background:white;">
+                        <div><label style="font-size: 0.75rem; color:var(--text-muted);">From</label><input type="date" id="pdfFrom" style="padding:0.6rem; font-size:0.8rem; background:white;"></div>
+                        <div><label style="font-size: 0.75rem; color:var(--text-muted);">To</label><input type="date" id="pdfTo" style="padding:0.6rem; font-size:0.8rem; background:white;"></div>
                     </div>
-                    <button class="btn" style="background:#1E293B;" onclick="generatePDFReport()">Download PDF</button>
+                    <button class="btn" style="background:#1E293B;" onclick="generatePDFReport()">Generate PDF</button>
                 </div>
 
                 <div id="expenseList"></div>
@@ -229,7 +238,7 @@
     </div>
 
     <script>
-        // FIREBASE CONFIG (Kept intact)
+        // FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyALrWPuk2toBA5faEImfzWPCoV-NcM53E0",
             authDomain: "mahir-library.firebaseapp.com",
@@ -243,10 +252,11 @@
 
         let students = [], expenses = [], currentView = 'Paid', activeModalId = null, currentProfileId = null;
 
-        // ON LOAD
         window.onload = () => {
             const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dashMonth').value = today.substring(0, 7);
             document.getElementById('eDate').value = today;
+            document.getElementById('sStartDate').value = today;
             document.getElementById('sDueDate').value = today;
             load();
         };
@@ -261,20 +271,33 @@
                 updateDashboard(); renderSeats(); renderStudents(); renderExpenses();
             } catch (err) {
                 console.error(err);
-                alert("Internet connection check karein.");
+                alert("Internet connection error.");
             }
             document.getElementById('loader-overlay').style.display = 'none';
         }
 
-        // UPDATE DASHBOARD & SMART REMINDERS
+        // WhatsApp Direct Link
+        function sendWhatsApp(phone, name, dueDate) {
+            const dueStr = new Date(dueDate).toLocaleDateString('en-IN');
+            const msg = `Hello ${name}, Mahir Ali Library me aapki seat ki fees pending hai. Due date ${dueStr} thi. Kripya jama karwayein.`;
+            window.open(`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // DASHBOARD WITH MONTHLY STRICT FILTER
         function updateDashboard() {
             let rev = 0, due1to3 = 0, due4to7 = 0;
+            const month = document.getElementById('dashMonth').value;
             const todayStr = new Date().setHours(0,0,0,0);
 
             students.forEach(s => {
-                rev += Number(s.fees || 0);
+                // Strict Monthly Ledger Calculation
+                if(s.paymentHistory) {
+                    s.paymentHistory.forEach(p => {
+                        if(!month || p.date.startsWith(month)) rev += Number(p.amount);
+                    });
+                }
                 
-                // Expiry Logic
+                // Smart Reminders
                 if(s.activeStatus !== 'Paused' && s.feeStatus === 'Paid') {
                     const due = new Date(s.dueDate).setHours(0,0,0,0);
                     const diffDays = (due - todayStr) / (1000 * 60 * 60 * 24);
@@ -283,7 +306,10 @@
                 }
             });
             
-            const exp = expenses.reduce((a, b) => a + Number(b.amount || 0), 0);
+            const exp = expenses.reduce((sum, e) => {
+                if(!month || e.date.startsWith(month)) return sum + Number(e.amount || 0);
+                return sum;
+            }, 0);
             
             document.getElementById('total-revenue').innerText = '₹' + rev.toLocaleString('en-IN');
             document.getElementById('total-expenses').innerText = '₹' + exp.toLocaleString('en-IN');
@@ -293,13 +319,13 @@
             document.getElementById('exp-4to7').innerText = due4to7;
         }
 
-        // SHIFT-WISE SEAT MATRIX
+        // SEAT MATRIX FIX (Color & Filter)
         function checkSeatOccupied(seatNumber, selectedShift) {
             return students.find(s => {
                 if(Number(s.seat) !== seatNumber || s.activeStatus === 'Paused') return false;
-                if(selectedShift === 'All') return true; // Show all booked seats
-                if(s.shift === 'Full Day' || selectedShift === 'Full Day') return true; // Full day blocks all
-                return s.shift === selectedShift; // Match specific shift
+                if(selectedShift === 'All') return true; 
+                if(s.shift === 'Full Day' || selectedShift === 'Full Day') return true; 
+                return s.shift === selectedShift; 
             });
         }
 
@@ -310,28 +336,39 @@
             
             for(let i=1; i<=110; i++) {
                 const s = checkSeatOccupied(i, shiftFilter);
-                container.innerHTML += `<div class="seat ${s?'occupied':'available'}" style="aspect-ratio:1; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.7rem; color:white; font-weight:700; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                // Fixed Color Binding Here
+                const bgColor = s ? 'var(--danger)' : 'var(--success)';
+                container.innerHTML += `<div class="seat" style="background-color:${bgColor}; aspect-ratio:1; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.7rem; color:white; font-weight:700; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                     <span>${i}</span>
                     <div style="font-size:0.4rem; white-space:nowrap; overflow:hidden; width:90%; text-align:center;">${s?s.name:''}</div>
                 </div>`;
             }
         }
 
-        // STUDENT RENDERING
+        // STUDENTS LIST WITH SORTING & PLAN DATES
         function renderStudents() {
             const container = document.getElementById('studentListContainer');
             const search = document.getElementById('searchName').value.toLowerCase();
-            const filtered = students.filter(s => {
+            const sortBy = document.getElementById('sortStudents').value;
+
+            let filtered = students.filter(s => {
                 const matchesSearch = s.name.toLowerCase().includes(search);
                 if(currentView === 'Paused') return s.activeStatus === 'Paused' && matchesSearch;
                 return s.feeStatus === currentView && s.activeStatus !== 'Paused' && matchesSearch;
             });
 
-            filtered.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate));
+            // Sorting Feature Applied
+            filtered.sort((a,b) => {
+                if(sortBy === 'name') return a.name.localeCompare(b.name);
+                if(sortBy === 'seat') return Number(a.seat) - Number(b.seat);
+                return new Date(a.dueDate) - new Date(b.dueDate);
+            });
 
             container.innerHTML = filtered.length ? '' : '<p style="text-align:center; padding:20px; color:gray;">No records.</p>';
             filtered.forEach(s => {
                 const isOverdue = new Date(s.dueDate).setHours(0,0,0,0) < new Date().setHours(0,0,0,0);
+                const planStart = s.startDate || s.dateAdded; // Fallback for old records
+
                 container.innerHTML += `
                 <div class="list-item ${currentView==='Pending'?'pending-item':''} ${currentView==='Paused'?'paused-item':''}">
                     <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
@@ -342,116 +379,92 @@
                         <span>Shift: ${s.shift}</span>
                         <span style="color:var(--success); font-weight:600;">Paid: ₹${s.fees}</span>
                     </div>
-                    <div style="font-size:0.8rem; color:gray; margin-bottom:10px;">
-                        Due: <span style="color:${isOverdue?'var(--danger)':'inherit'}; font-weight:${isOverdue?'600':'normal'};">${new Date(s.dueDate).toLocaleDateString('en-IN')} ${isOverdue?'(Overdue)':''}</span>
+                    <div style="font-size:0.8rem; color:gray; margin-bottom:8px;">
+                        Plan: <b>${new Date(planStart).toLocaleDateString('en-IN')}</b> to <b style="color:${isOverdue?'var(--danger)':'inherit'};">${new Date(s.dueDate).toLocaleDateString('en-IN')} ${isOverdue?'(Overdue)':''}</b>
                     </div>
                     <div class="action-row" style="padding-top:8px; margin-top:0;">
-                        <button class="action-btn" style="background:#F1F5F9; color:var(--primary);" onclick="openProfile('${s.id}')"><span class="material-symbols-rounded" style="font-size:16px;">person</span> Profile</button>
+                        ${s.activeStatus !== 'Paused' ? `<button class="action-btn" style="background:var(--whatsapp); color:white; flex: 0.5;" onclick="sendWhatsApp('${s.phone}', '${s.name}', '${s.dueDate}')"><span class="material-symbols-rounded" style="font-size:16px;">chat</span></button>` : ''}
+                        
+                        <button class="action-btn" style="background:#F1F5F9; color:var(--primary);" onclick="openProfile('${s.id}')"><span class="material-symbols-rounded" style="font-size:16px;">person</span></button>
+                        
                         ${s.feeStatus === 'Pending' && s.activeStatus !== 'Paused' ? 
-                            `<button class="action-btn btn-success" onclick="openFeeModal('${s.id}','${s.name}')">Collect Fee</button>` : 
-                            `<button class="action-btn" style="background:var(--success-light); color:var(--success);" onclick="openFeeModal('${s.id}','${s.name}')">Renew</button>`
+                            `<button class="action-btn btn-success" onclick="openFeeModal('${s.id}','${s.name}', '${s.dueDate}')">Pay</button>` : 
+                            `<button class="action-btn" style="background:var(--success-light); color:var(--success);" onclick="openFeeModal('${s.id}','${s.name}', '${s.dueDate}')">Renew</button>`
                         }
                     </div>
                 </div>`;
             });
         }
 
-        // NEW: STUDENT PROFILE & LEDGER
+        // PROFILE WITH START/END DATE
         function openProfile(id) {
             currentProfileId = id;
             const s = students.find(x => x.id === id);
             if(!s) return;
-            
+            const planStart = s.startDate || s.dateAdded;
+
             document.getElementById('profileContent').innerHTML = `
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <span style="color:var(--text-muted); font-size:0.85rem;">Name:</span>
-                    <span style="font-weight:600; color:var(--text-main);">${s.name}</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <span style="color:var(--text-muted); font-size:0.85rem;">Phone:</span>
-                    <span style="font-weight:600; color:var(--text-main);">${s.phone}</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <span style="color:var(--text-muted); font-size:0.85rem;">Seat & Shift:</span>
-                    <span style="font-weight:600; color:var(--text-main);">Seat ${s.seat} (${s.shift})</span>
-                </div>
-                <div style="display:flex; justify-content:space-between;">
-                    <span style="color:var(--text-muted); font-size:0.85rem;">Status:</span>
-                    <span style="font-weight:600; color:${s.activeStatus === 'Paused' ? 'var(--paused)' : 'var(--success)'};">${s.activeStatus}</span>
-                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:var(--text-muted); font-size:0.85rem;">Name:</span><span style="font-weight:600;">${s.name}</span></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:var(--text-muted); font-size:0.85rem;">Phone:</span><span style="font-weight:600;">${s.phone}</span></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:var(--text-muted); font-size:0.85rem;">Seat & Shift:</span><span style="font-weight:600;">Seat ${s.seat} (${s.shift})</span></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:var(--text-muted); font-size:0.85rem;">Plan:</span><span style="font-weight:600;">${new Date(planStart).toLocaleDateString('en-IN')} to ${new Date(s.dueDate).toLocaleDateString('en-IN')}</span></div>
+                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted); font-size:0.85rem;">Status:</span><span style="font-weight:600; color:${s.activeStatus === 'Paused' ? 'var(--paused)' : 'var(--success)'};">${s.activeStatus}</span></div>
             `;
 
             const tbody = document.getElementById('historyTableBody');
             tbody.innerHTML = '';
             if(s.paymentHistory && s.paymentHistory.length > 0) {
-                // Sort history newest first
                 const sortedHistory = [...s.paymentHistory].sort((a,b) => new Date(b.date) - new Date(a.date));
                 sortedHistory.forEach(h => {
-                    tbody.innerHTML += `<tr>
-                        <td>${new Date(h.date).toLocaleDateString('en-IN')}</td>
-                        <td>${h.type}</td>
-                        <td style="color:var(--success); font-weight:600;">₹${h.amount}</td>
-                    </tr>`;
+                    tbody.innerHTML += `<tr><td>${new Date(h.date).toLocaleDateString('en-IN')}</td><td>${h.type}</td><td style="color:var(--success); font-weight:600;">₹${h.amount}</td></tr>`;
                 });
             } else {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-muted);">No payment history recorded yet.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-muted);">No ledger data.</td></tr>`;
             }
-
             document.getElementById('profileModal').style.display = 'flex';
         }
         function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
 
-        // NEW: DOWNLOAD DIGITAL ID CARD (PDF)
+        // ID CARD FIX (Start to End Date Info)
         function downloadIDCard() {
             const s = students.find(x => x.id === currentProfileId);
+            const planStart = s.startDate || s.dateAdded;
+            
             const { jsPDF } = window.jspdf;
-            // Standard Credit Card / ID Size (Landscape)
             const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: [85.6, 54] });
             
-            // Background
-            doc.setFillColor(248, 250, 252);
-            doc.rect(0, 0, 85.6, 54, 'F');
-            
-            // Header
-            doc.setFillColor(79, 70, 229);
-            doc.rect(0, 0, 85.6, 15, 'F');
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(12);
-            doc.setFont("helvetica", "bold");
+            doc.setFillColor(248, 250, 252); doc.rect(0, 0, 85.6, 54, 'F');
+            doc.setFillColor(79, 70, 229); doc.rect(0, 0, 85.6, 15, 'F');
+            doc.setTextColor(255, 255, 255); doc.setFontSize(12); doc.setFont("helvetica", "bold");
             doc.text("MAHIR ALI LIBRARY", 42.8, 10, null, null, "center");
 
-            // Student Details
-            doc.setTextColor(15, 23, 42);
-            doc.setFontSize(10);
-            doc.text(`Name: ${s.name}`, 5, 24);
-            doc.text(`Seat No: ${s.seat}`, 5, 31);
-            doc.text(`Shift: ${s.shift}`, 5, 38);
-            doc.text(`Phone: ${s.phone}`, 5, 45);
+            doc.setTextColor(15, 23, 42); doc.setFontSize(10); doc.setFont("helvetica", "normal");
+            doc.text(`Name: ${s.name}`, 5, 22);
+            doc.text(`Seat No: ${s.seat}  |  Shift: ${s.shift}`, 5, 29);
+            doc.text(`Phone: ${s.phone}`, 5, 36);
+            
+            doc.setFontSize(8); doc.setTextColor(100);
+            doc.text(`Valid: ${new Date(planStart).toLocaleDateString('en-IN')} TO ${new Date(s.dueDate).toLocaleDateString('en-IN')}`, 5, 45);
 
-            // Footer
-            doc.setFillColor(16, 185, 129);
-            doc.rect(0, 50, 85.6, 4, 'F');
-
+            doc.setFillColor(16, 185, 129); doc.rect(0, 50, 85.6, 4, 'F');
             doc.save(`Library_ID_${s.name}.pdf`);
         }
 
-        // SHIFT-WISE CLASH VALIDATION IN ADD STUDENT
+        // ADD STUDENT + FULL RESET FIX
         async function addStudent(e) {
             e.preventDefault();
             const seat = document.getElementById('sSeat').value;
             const shift = document.getElementById('sShift').value;
             
-            // Validation: Check if seat is booked for the SAME shift or Full Day
             const isClash = students.some(x => {
                 if(Number(x.seat) !== Number(seat) || x.activeStatus === 'Paused') return false;
-                if(x.shift === 'Full Day' || shift === 'Full Day') return true; // Full day clashes with everything
-                return x.shift === shift; // Morning clashes with Morning
+                if(x.shift === 'Full Day' || shift === 'Full Day') return true; 
+                return x.shift === shift; 
             });
 
             if(isClash) return alert(`Seat ${seat} is already occupied for ${shift} or Full Day!`);
             
             document.getElementById('loader-overlay').style.display = 'flex';
-            
             const amt = Number(document.getElementById('sFees').value);
             const todayStr = new Date().toISOString().split('T')[0];
 
@@ -459,47 +472,67 @@
                 name: document.getElementById('sName').value, 
                 phone: document.getElementById('sPhone').value,
                 seat: seat, 
-                shift: shift,
+                shift: shift, 
                 feeStatus: document.getElementById('sStatus').value, 
-                fees: amt,
-                dueDate: document.getElementById('sDueDate').value, 
-                activeStatus: 'Active',
+                fees: amt, 
+                startDate: document.getElementById('sStartDate').value, // Saved
+                dueDate: document.getElementById('sDueDate').value,     // Saved
+                activeStatus: 'Active', 
                 dateAdded: todayStr,
-                paymentHistory: [{ date: todayStr, amount: amt, type: 'Admission' }] // Array for history
+                paymentHistory: [{ date: todayStr, amount: amt, type: 'Admission' }] 
             });
+            
+            // FULL RESET FIX
             document.getElementById('addStudentForm').reset();
+            document.getElementById('sStartDate').value = todayStr;
+            document.getElementById('sDueDate').value = todayStr;
+            document.getElementById('sFees').value = "0";
+
             load(); switchTab('list');
         }
 
-        // COLLECT FEE WITH LEDGER UPDATE
-        function openFeeModal(id, name) { activeModalId = id; document.getElementById('feeModalDesc').innerText = `Update for ${name}`; document.getElementById('feeModal').style.display = 'flex'; }
+        // RENEW MODAL WITH START DATE FIX
+        function openFeeModal(id, name, oldDueDate) { 
+            activeModalId = id; 
+            document.getElementById('feeModalDesc').innerText = `Updating Plan for ${name}`; 
+            
+            document.getElementById('feeInputAmount').value = '';
+            document.getElementById('feeInputStart').value = oldDueDate; // Auto fill start with old end
+            document.getElementById('feeInputDate').value = '';
+            
+            document.getElementById('feeModal').style.display = 'flex'; 
+        }
         function closeFeeModal() { document.getElementById('feeModal').style.display = 'none'; }
         
         document.getElementById('feeConfirmBtn').onclick = async () => {
             const amt = document.getElementById('feeInputAmount').value;
-            const date = document.getElementById('feeInputDate').value;
-            if(!amt || !date) return alert("Fill all details");
+            const newStart = document.getElementById('feeInputStart').value;
+            const newDue = document.getElementById('feeInputDate').value;
             
-            closeFeeModal(); 
-            document.getElementById('loader-overlay').style.display = 'flex';
+            if(!amt || !newStart || !newDue) return alert("Fill all details");
             
-            const newPayment = { date: new Date().toISOString().split('T')[0], amount: Number(amt), type: 'Renewal/Fee' };
+            closeFeeModal(); document.getElementById('loader-overlay').style.display = 'flex';
+            const todayStr = new Date().toISOString().split('T')[0];
+            const newPayment = { date: todayStr, amount: Number(amt), type: 'Renewal/Fee' };
 
+            // Update Start Date AND Due Date
             await db.collection("students").doc(activeModalId).update({ 
                 feeStatus: 'Paid', 
                 fees: firebase.firestore.FieldValue.increment(Number(amt)), 
-                dueDate: date,
-                paymentHistory: firebase.firestore.FieldValue.arrayUnion(newPayment) // Add to array
+                startDate: newStart,
+                dueDate: newDue,
+                paymentHistory: firebase.firestore.FieldValue.arrayUnion(newPayment) 
             });
             load();
         };
 
-        // EXPENSE AND PDF LOGIC
+        // EXPENSE
         async function addExpense(e) {
             e.preventDefault();
             document.getElementById('loader-overlay').style.display = 'flex';
             await db.collection("expenses").add({ type: document.getElementById('eType').value, amount: Number(document.getElementById('eAmount').value), date: document.getElementById('eDate').value });
             document.getElementById('addExpenseForm').reset();
+            document.getElementById('eDate').value = new Date().toISOString().split('T')[0];
             load();
         }
 
@@ -516,16 +549,29 @@
             `).join('');
         }
 
+        // PDF REPORT
         function generatePDFReport() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const fromDate = document.getElementById('pdfFrom').value;
             const toDate = document.getElementById('pdfTo').value;
-            if(!fromDate || !toDate) return alert("Please select dates.");
+            if(!fromDate || !toDate) return alert("Please select both From and To dates.");
 
-            const fStu = students.filter(s => s.dateAdded >= fromDate && s.dateAdded <= toDate);
+            let totalRev = 0;
+            let studentRows = [];
+
+            students.forEach(s => {
+                if(s.paymentHistory) {
+                    s.paymentHistory.forEach(p => {
+                        if(p.date >= fromDate && p.date <= toDate) {
+                            totalRev += Number(p.amount);
+                            studentRows.push([s.name, s.seat, p.type, p.date, `Rs ${p.amount}`]);
+                        }
+                    });
+                }
+            });
+
             const fExp = expenses.filter(e => e.date >= fromDate && e.date <= toDate);
-            const totalRev = fStu.reduce((a, b) => a + Number(b.fees || 0), 0);
             const totalExp = fExp.reduce((a, b) => a + Number(b.amount || 0), 0);
 
             doc.setFontSize(22); doc.setTextColor(79, 70, 229);
@@ -535,21 +581,36 @@
 
             doc.setDrawColor(226, 232, 240); doc.rect(14, 40, 182, 30);
             doc.setFontSize(10); doc.setTextColor(0);
-            doc.text(`Total Revenue: INR ${totalRev.toLocaleString('en-IN')}`, 20, 50);
-            doc.text(`Total Expenses: INR ${totalExp.toLocaleString('en-IN')}`, 20, 57);
+            doc.text(`Total Revenue (Collected): INR ${totalRev.toLocaleString('en-IN')}`, 20, 50);
+            doc.text(`Total Expenses (Bills): INR ${totalExp.toLocaleString('en-IN')}`, 20, 57);
             doc.setFontSize(12); doc.text(`Net Profit: INR ${(totalRev - totalExp).toLocaleString('en-IN')}`, 20, 65);
 
-            const finalY = 85;
-            doc.setFontSize(14); doc.text("Expense Records", 14, finalY);
-            const expenseRows = fExp.map(e => [e.type, e.amount, e.date]);
-            doc.autoTable({ startY: finalY + 5, head: [['Category', 'Amount', 'Date']], body: expenseRows, headStyles: { fillColor: [239, 68, 68] } });
+            let finalY = 85;
 
-            doc.save(`Report_${fromDate}_to_${toDate}.pdf`);
+            doc.setFontSize(14); doc.text("Income / Fee Collections", 14, finalY);
+            if(studentRows.length > 0) {
+                doc.autoTable({ startY: finalY + 5, head: [['Student Name', 'Seat', 'Type', 'Date', 'Amount']], body: studentRows, headStyles: { fillColor: [79, 70, 229] } });
+                finalY = doc.lastAutoTable.finalY + 15;
+            } else {
+                doc.setFontSize(10); doc.text("No income recorded in this period.", 14, finalY + 10);
+                finalY += 20;
+            }
+
+            doc.setFontSize(14); doc.text("Expense Records", 14, finalY);
+            if(fExp.length > 0) {
+                const expenseRows = fExp.map(e => [e.type, e.date, `Rs ${e.amount}`]);
+                doc.autoTable({ startY: finalY + 5, head: [['Category', 'Date', 'Amount']], body: expenseRows, headStyles: { fillColor: [239, 68, 68] } });
+            } else {
+                doc.setFontSize(10); doc.text("No expenses recorded in this period.", 14, finalY + 10);
+            }
+
+            doc.save(`Mahir_Library_Report_${fromDate}_to_${toDate}.pdf`);
         }
 
+        async function togglePause(id, status) { document.getElementById('loader-overlay').style.display = 'flex'; await db.collection("students").doc(id).update({ activeStatus: status }); load(); }
         async function del(col, id) { if(confirm("Are you sure?")) { document.getElementById('loader-overlay').style.display = 'flex'; await db.collection(col).doc(id).delete(); load(); } }
-        function switchTab(id) { document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active')); document.getElementById('tab-'+id).classList.add('active'); document.getElementById('nav-'+id).classList.add('active'); if(id==='seats') renderSeats(); }
-        function setView(v) { currentView=v; document.querySelectorAll('.status-toggle button').forEach(b=>b.classList.remove('active')); document.getElementById('btn-'+v).classList.add('active'); renderStudents(); }
+        function switchTab(id) { document.getElementById('searchName').value = ''; document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active')); document.getElementById('tab-'+id).classList.add('active'); document.getElementById('nav-'+id).classList.add('active'); if(id==='seats') renderSeats(); if(id==='list') renderStudents(); }
+        function setView(v) { currentView=v; document.getElementById('searchName').value = ''; document.querySelectorAll('.status-toggle button').forEach(b=>b.classList.remove('active')); document.getElementById('btn-'+v).classList.add('active'); renderStudents(); }
     </script>
 </body>
 </html>
